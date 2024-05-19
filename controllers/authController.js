@@ -75,6 +75,7 @@ const loginController = async (req, res) => {
         message: "Email is not registered",
       })
     }
+
     const match = await authHelper.comparePassword(password, user.password)
     if (!match) {
       return res.status(200).send({
@@ -90,6 +91,7 @@ const loginController = async (req, res) => {
       success: true,
       message: "Login Successfully",
       user: {
+        _id: user._id,
         name: user.name,
         email: user.email,
         phone: user.phone,

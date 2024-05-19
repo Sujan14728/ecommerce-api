@@ -5,6 +5,7 @@ const mongoose = require("mongoose")
 const connectDB = require("./config/db")
 const authRoutes = require("./routes/authRoutes")
 const productRoutes = require("./routes/productRoutes")
+const cartRoutes = require("./routes/cartRoutes")
 require("dotenv").config()
 
 //database config
@@ -15,6 +16,7 @@ app.use(express.json())
 app.use("/api/v1/auth", authRoutes)
 
 app.use("/product", productRoutes)
+app.use("/cart", cartRoutes)
 
 //rest api
 app.get("/", (req, res) => {
