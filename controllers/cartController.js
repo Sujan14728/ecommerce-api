@@ -28,24 +28,26 @@ const deleteFromCart = async (req, res) => {
   try {
     const user_id = req.user._id
     const cart_id = req.params.id
-    const cart = await Cart.find({ user_id: user_id })
-    if (user_id == cart[0].user_id) {
-      const query = await Cart.deleteOne({ _id: cart_id })
+    const cart = await Cart.find({ _id: cart_id, user_id })
+    console.log(cart)
+    if (cart[0] != null) {
+      const query = await Cart.deleteOne({ _id: cart_id, user_id })
       return res.status(200).send({
         success: true,
         message: `Cart with id:${cart_id} is deleted successfully`,
         query,
       })
+    } else {
+      return res.status(400).send({
+        success: false,
+        message: "You are not authorized to delete this cart",
+      })
     }
-    return res.status(400).send({
-      success: false,
-      message: "You are not authorized to delete this cart",
-    })
   } catch (error) {
     console.log(error)
     return res.status(400).send({
       success: false,
-      message: "Server Error in deleteFromCart",
+      message: "Error in deleteFromCart",
       error,
     })
   }
