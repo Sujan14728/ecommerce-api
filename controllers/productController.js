@@ -69,6 +69,22 @@ const deleteProduct = async (req, res) => {
   }
 }
 
-const viewProduct = async (req, res) => {}
+const viewProduct = async (req, res) => {
+  try {
+    const products = await Product.find()
+    console.log(products)
+    res.status(200).send({
+      success: true,
+      message: "Products fetched successfully",
+      products,
+    })
+  } catch (error) {
+    res.status(400).send({
+      success: false,
+      message: "Error in fetching Products",
+      error,
+    })
+  }
+}
 
 module.exports = { addProduct, editProduct, deleteProduct, viewProduct }
